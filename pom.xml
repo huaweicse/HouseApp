@@ -8,8 +8,18 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>20.0</version>
+            </dependency>
             <dependency>
                 <groupId>com.huawei.paas.cse</groupId>
                 <artifactId>cse-dependency</artifactId>
@@ -18,9 +28,19 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
+                <groupId>org.apache.servicecomb.saga</groupId>
+                <artifactId>omega-spring-starter</artifactId>
+                <version>0.3.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.servicecomb.saga</groupId>
+                <artifactId>omega-transport-servicecomb</artifactId>
+                <version>0.3.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>1.5.12.RELEASE</version>
+                <version>1.5.14.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

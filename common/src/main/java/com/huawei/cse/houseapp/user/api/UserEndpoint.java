@@ -5,6 +5,8 @@ public interface UserEndpoint {
     
     long login(String userName, String password);
 
+    boolean buyWithTransactionSaga(long userId, double price);
+    
     boolean buyWithTransaction(long userId, double price);
 
     boolean buyWithTransaction2pc(long userId, double price);

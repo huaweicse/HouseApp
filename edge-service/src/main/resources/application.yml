@@ -1,10 +1,16 @@
 cse-config-order: 100
 
+# omega need this name
+spring:
+  application:
+    name: edge-service
+
 ## CSE configurations
 APPLICATION_ID: houseapp
 service_description:
-  name: edge-service
+  name: ${spring.application.name}
   version: 0.0.1
+  environment: development
 cse:
   service:
     registry:

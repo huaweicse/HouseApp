@@ -3,19 +3,21 @@ package com.huawei.cse.houseapp.product.api;
 import java.util.List;
 
 public interface ProductEndpoint {
-    List<ProductInfo> searchAll(int userId);
+  List<ProductInfo> searchAll(int userId);
 
-    public List<ProductInfo> searchAllForCustomer();
+  public List<ProductInfo> searchAllForCustomer();
 
-    void addProduct(double price);
+  void addProduct(double price);
 
-    public boolean buyWithTransaction2pc(long productId, long userId, double price);
+  public boolean buyWithTransaction2pc(long productId, long userId, double price);
 
-    public boolean buyWithTransaction(long productId, long userId, double price);
+  public boolean buyWithTransaction(long productId, long userId, double price);
 
-    public boolean buyWithoutTransaction(long productId, long userId, double price);
+  public boolean buyWithTransactionSaga(long productId, long userId, double price);
 
-    long login(String userName, String password);
+  public boolean buyWithoutTransaction(long productId, long userId, double price);
 
-    double queryReduced();
+  long login(String userName, String password);
+
+  double queryReduced();
 }

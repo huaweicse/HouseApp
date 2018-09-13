@@ -1,15 +1,23 @@
 cse-config-order: 100
 
 ## Spring Boot configurations
+spring:
+  application:
+    name: product-service
 server:
   port: 8089
+# alpha
+alpha:
+  cluster:
+    address: 127.0.0.1:7080
 
 ## CSE configurations
 
 APPLICATION_ID: houseapp
 service_description:
-  name: product-service
+  name: ${spring.application.name}
   version: 0.0.1
+  environment: development
 cse:
   service:
     registry:

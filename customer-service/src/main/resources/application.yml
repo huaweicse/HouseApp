@@ -1,13 +1,22 @@
 cse-config-order: 100
 
 ## Spring Boot configurations
+# omega need this name
+spring:
+  application:
+    name: customer-service
 server:
   port: 9093
+
+# alpha
+alpha:
+  cluster:
+    address: 127.0.0.1:7080
 
 ## CSE configurations
 APPLICATION_ID: houseapp
 service_description:
-  name: customer-service
+  name: ${spring.application.name}
   version: 0.0.1
   environment: development
 cse:
