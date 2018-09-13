@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.huawei.cse.houseapp.user.api.UserInfo;
-import com.huawei.cse.houseapp.user.api.UserService;
+import com.huawei.cse.houseapp.user.api.UserEndpoint;
 import com.huawei.cse.houseapp.user.dao.UserMapper;
 import com.huawei.paas.cse.tcc.annotation.TccTransaction;
 import com.netflix.config.DynamicPropertyFactory;
@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiResponse;
 
 @RestSchema(schemaId = "user")
 @RequestMapping(path = "/")
-public class UserServiceImpl implements UserService {
+public class UserEndpointImpl implements UserEndpoint {
 
     // private UserMapper userMapper = new MockedUserMapper();
     @Inject

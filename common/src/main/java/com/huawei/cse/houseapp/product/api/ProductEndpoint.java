@@ -2,7 +2,7 @@ package com.huawei.cse.houseapp.product.api;
 
 import java.util.List;
 
-public interface ProductService {
+public interface ProductEndpoint {
     List<ProductInfo> searchAll(int userId);
 
     public List<ProductInfo> searchAllForCustomer();

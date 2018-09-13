@@ -1,4 +1,10 @@
 cse-config-order: 100
+
+## Spring Boot configurations
+server:
+  port: 8088
+
+## CSE configurations
 APPLICATION_ID: houseapp
 service_description:
   name: loadtestclient
@@ -6,17 +12,17 @@ service_description:
 cse:
   service:
     registry:
-      address: https://cse.cn-north-1.myhwclouds.com:443
+      address: https://cse.cn-north-1.myhuaweicloud.com
       instance:
         watch: false
   config:
     client:
-      serverUri: https://cse.cn-north-1.myhwclouds.com:443
+      serverUri: https://cse.cn-north-1.myhuaweicloud.com
       refreshMode: 1
       refresh_interval: 5000
   monitor:
     client:
-      serverUri: https://cse.cn-north-1.myhwclouds.com:443
+      serverUri: https://cse.cn-north-1.myhuaweicloud.com
   credentials:
     accessKey: BUDCVWSAW04UZVLSZBQR
     secretKey: BHixEctCJFbTkPUVUUjRDSeVwMAknlAy5oB7idgR

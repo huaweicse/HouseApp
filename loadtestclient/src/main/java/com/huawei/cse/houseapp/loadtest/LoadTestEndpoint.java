@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.huawei.cse.houseapp.customer.api.CustomerService;
+import com.huawei.cse.houseapp.customer.api.CustomerEndpoint;
 
 @RestSchema(schemaId = "load")
 @RequestMapping(path = "/")
-public class LoadTestService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoadTestService.class);
+public class LoadTestEndpoint {
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoadTestEndpoint.class);
     //初始化线程池
     private static ExecutorService executor;
 
     private static boolean running;
 
     @RpcReference(microserviceName = "customer-service", schemaId = "customer")
-    private static CustomerService customerService;
+    private static CustomerEndpoint customerService;
 
     @GetMapping(path = "start")
     public boolean start(@RequestParam(name = "threadCount") int treadCount,
@@ -37,7 +37,7 @@ public class LoadTestService {
 
     @GetMapping(path = "stop")
     public boolean stop() {
-        synchronized (LoadTestService.class) {
+        synchronized (LoadTestEndpoint.class) {
             if (running && executor != null) {
                 running = false;
                 executor.shutdownNow();

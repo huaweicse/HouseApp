@@ -1,6 +1,6 @@
 package com.huawei.cse.houseapp.account.api;
 
-public interface AccountService {
+public interface AccountEndpoint {
     boolean payWithTransaction(long userid, double amount);
 
     boolean payWithTransaction2pc(long userid, double amount);

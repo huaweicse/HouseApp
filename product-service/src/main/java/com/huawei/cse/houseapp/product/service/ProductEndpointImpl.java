@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.huawei.cse.houseapp.product.api.ProductInfo;
-import com.huawei.cse.houseapp.product.api.ProductService;
+import com.huawei.cse.houseapp.product.api.ProductEndpoint;
 import com.huawei.cse.houseapp.product.dao.ProductMapper;
 import com.huawei.paas.cse.tcc.annotation.TccTransaction;
 import com.netflix.config.DynamicPropertyFactory;
@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiResponse;
 
 @RestSchema(schemaId = "product")
 @RequestMapping(path = "/")
-public class ProductServiceImpl implements ProductService {
+public class ProductEndpointImpl implements ProductEndpoint {
     private AtomicLong db = new AtomicLong(0);
 
     private static AtomicLong reqCount = new AtomicLong(0);

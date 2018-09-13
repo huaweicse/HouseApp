@@ -1,6 +1,6 @@
 package com.huawei.cse.houseapp.user.api;
 
-public interface UserService {
+public interface UserEndpoint {
     long login2(String userName, String password);
     
     long login(String userName, String password);

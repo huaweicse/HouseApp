@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.huawei.cse.houseapp.product.api.ProductInfo;
 
-public interface CustomerService {
+public interface CustomerEndpoint {
     boolean buyWithTransaction2PC(long userId, long productId, double price);
 
     boolean buyWithTransaction(long userId, long productId, double price);

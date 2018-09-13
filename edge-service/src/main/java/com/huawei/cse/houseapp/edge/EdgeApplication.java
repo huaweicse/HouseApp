@@ -16,12 +16,15 @@
 
 package com.huawei.cse.houseapp.edge;
 
-import org.apache.servicecomb.foundation.common.utils.BeanUtils;
-import org.apache.servicecomb.foundation.common.utils.Log4jUtils;
+import org.apache.servicecomb.springboot.starter.provider.EnableServiceComb;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.web.DispatcherServletAutoConfiguration;
 
-public class EdgeMain {
-    public static void main(String[] args) throws Exception {
-        Log4jUtils.init();
-        BeanUtils.init();
-    }
+@SpringBootApplication(exclude = DispatcherServletAutoConfiguration.class)
+@EnableServiceComb
+public class EdgeApplication {
+  public static void main(String[] args) throws Exception {
+    SpringApplication.run(EdgeApplication.class, args);
+  }
 }

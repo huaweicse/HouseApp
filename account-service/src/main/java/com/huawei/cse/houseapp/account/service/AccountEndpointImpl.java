@@ -7,7 +7,7 @@ import org.apache.servicecomb.swagger.invocation.exception.InvocationException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.huawei.cse.houseapp.account.api.AccountService;
+import com.huawei.cse.houseapp.account.api.AccountEndpoint;
 import com.huawei.cse.houseapp.account.dao.AccountInfo;
 import com.huawei.cse.houseapp.account.dao.AccountMapper;
 import com.huawei.paas.cse.tcc.annotation.TccTransaction;
@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 
 @RpcSchema(schemaId = "account")
-public class AccountServiceImpl implements AccountService {
+public class AccountEndpointImpl implements AccountEndpoint {
     //内存测试
     //private AccountMapper accountMapper = new MockedAccountMapper();
     @Inject

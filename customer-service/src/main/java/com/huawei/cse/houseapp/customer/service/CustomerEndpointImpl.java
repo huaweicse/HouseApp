@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.huawei.cse.houseapp.account.api.AccountService;
-import com.huawei.cse.houseapp.customer.api.CustomerService;
+import com.huawei.cse.houseapp.account.api.AccountEndpoint;
+import com.huawei.cse.houseapp.customer.api.CustomerEndpoint;
 import com.huawei.cse.houseapp.product.api.ProductInfo;
-import com.huawei.cse.houseapp.product.api.ProductService;
-import com.huawei.cse.houseapp.user.api.UserService;
+import com.huawei.cse.houseapp.product.api.ProductEndpoint;
+import com.huawei.cse.houseapp.user.api.UserEndpoint;
 import com.huawei.paas.cse.tcc.annotation.TccTransaction;
 
 import io.swagger.annotations.ApiOperation;
@@ -25,15 +25,15 @@ import io.swagger.annotations.ApiResponse;
 
 @RestSchema(schemaId = "customer")
 @RequestMapping(path = "/")
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerEndpointImpl implements CustomerEndpoint {
     @RpcReference(microserviceName = "user-service", schemaId = "user")
-    private UserService userService;
+    private UserEndpoint userService;
 
     @RpcReference(microserviceName = "product-service", schemaId = "product")
-    private ProductService productService;
+    private ProductEndpoint productService;
 
     @RpcReference(microserviceName = "account-service", schemaId = "account")
-    private AccountService accountService;
+    private AccountEndpoint accountService;
 
     @Override
     @TccTransaction(cancelMethod = "cancelBuy", confirmMethod = "confirmBuy")
