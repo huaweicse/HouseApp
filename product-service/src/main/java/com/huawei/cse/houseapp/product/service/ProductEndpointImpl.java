@@ -227,6 +227,15 @@ public class ProductEndpointImpl implements ProductEndpoint {
   }
 
   @Override
+  @PostMapping(path = "buyWithTransactionTCC")
+  @ApiResponse(code = 400, response = String.class, message = "")
+  public boolean buyWithTransactionTCC(@RequestParam(name = "productId") long productId,
+      @RequestParam(name = "userId") long userId,
+      @RequestParam(name = "price") double price) {
+    return productService.buyWithTransactionTCC(productId, userId, price);
+  }
+  
+  @Override
   @TccTransaction(cancelMethod = "cancelBuy", confirmMethod = "confirmBuy")
   @PostMapping(path = "buy")
   @ApiResponse(code = 400, response = String.class, message = "")

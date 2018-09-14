@@ -346,7 +346,7 @@
                   formData.price = price;
                   $.ajax({
                     type: 'POST',
-                    url: "/api/customer-service/buy2pc",
+                    url: "/api/customer-service/buyWithTransactionTCC",
                     data: formData,
                     success: function a(data) {
                         window.alert("抢购成功");

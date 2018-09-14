@@ -44,6 +44,6 @@ cse:
   handler:
     chain:
       Provider:
-        default: perf-stats,qps-flowcontrol-provider,bizkeeper-provider,tcc-provider,twoPC-provider
+        default: qps-flowcontrol-provider,bizkeeper-provider,saga-provider
       Consumer:
-        default: perf-stats,qps-flowcontrol-consumer,loadbalance,bizkeeper-consumer,tcc-consumer,twoPC-consumer
+        default: qps-flowcontrol-consumer,loadbalance,bizkeeper-consumer,saga-consumer

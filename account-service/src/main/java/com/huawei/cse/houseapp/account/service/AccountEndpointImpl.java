@@ -82,9 +82,14 @@ public class AccountEndpointImpl implements AccountEndpoint {
   @ApiResponse(code = 400, response = String.class, message = "")
   public boolean payWithTransactionSaga(long userid, double amount) {
     return accountService.payWithTransactionSaga(userid, amount);
-
   }
 
+  @Override
+  @ApiResponse(code = 400, response = String.class, message = "")
+  public boolean payWithTransactionTCC(long userid, double amount) {
+    return accountService.payWithTransactionTCC(userid, amount);
+  }
+  
   @Override
   @TccTransaction(cancelMethod = "cancelPay", confirmMethod = "confirmPay")
   @ApiResponse(code = 400, response = String.class, message = "")

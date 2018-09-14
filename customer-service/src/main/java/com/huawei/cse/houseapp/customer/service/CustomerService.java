@@ -2,6 +2,7 @@ package com.huawei.cse.houseapp.customer.service;
 
 import org.apache.servicecomb.provider.pojo.RpcReference;
 import org.apache.servicecomb.saga.omega.context.annotations.SagaStart;
+import org.apache.servicecomb.saga.omega.context.annotations.TccStart;
 import org.apache.servicecomb.swagger.invocation.exception.InvocationException;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,22 @@ public class CustomerService {
     if (!productService.buyWithTransactionSaga(productId, userId, price)) {
       throw new InvocationException(400, "product already sold", "product already sold");
     }
-    if (!accountService.payWithTransaction(userId, price)) {
+    if (!accountService.payWithTransactionSaga(userId, price)) {
+      throw new InvocationException(400, "pay failed", "pay failed");
+    }
+    return true;
+  }
+
+  @TccStart
+  public boolean buyWithTransactionTCC(long userId,
+      long productId, double price) {
+    if (!userService.buyWithTransactionTCC(userId, price)) {
+      throw new InvocationException(400, "user do not got so much money", "user do not got so much money");
+    }
+    if (!productService.buyWithTransactionTCC(productId, userId, price)) {
+      throw new InvocationException(400, "product already sold", "product already sold");
+    }
+    if (!accountService.payWithTransactionTCC(userId, price)) {
       throw new InvocationException(400, "pay failed", "pay failed");
     }
     return true;

@@ -36,3 +36,12 @@ cse:
     address: 0.0.0.0:18080
     server:
       thread-count: 10
+
+  http:
+    dispatcher:
+      edge:
+        default:
+          enabled: true
+          prefix: api
+          withVersion: false
+          prefixSegmentCount: 2

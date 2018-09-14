@@ -84,6 +84,15 @@ public class UserEndpointImpl implements UserEndpoint {
   }
 
   @Override
+  @PostMapping(path = "buyWithTransactionTCC")
+  @ApiResponse(code = 400, response = String.class, message = "")
+  public boolean buyWithTransactionTCC(@RequestParam(name = "userId") long userId,
+      @RequestParam(name = "price") double price) {
+    return userService.buyWithTransactionTCC(userId, price);
+  }
+
+  
+  @Override
   @PostMapping(path = "buyWithoutTransaction")
   @ApiResponse(code = 400, response = String.class, message = "")
   public boolean buyWithoutTransaction(@RequestParam(name = "userId") long userId,

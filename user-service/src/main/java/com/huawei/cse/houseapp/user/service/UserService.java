@@ -3,6 +3,7 @@ package com.huawei.cse.houseapp.user.service;
 import javax.inject.Inject;
 
 import org.apache.servicecomb.saga.omega.transaction.annotations.Compensable;
+import org.apache.servicecomb.saga.omega.transaction.annotations.Participate;
 import org.apache.servicecomb.swagger.invocation.exception.InvocationException;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +40,42 @@ public class UserService {
     info.setTotalBalance(info.getTotalBalance() + price);
     userMapper.updateUserInfo(info);
     return true;
+  }
+
+  @Participate(confirmMethod = "confirmTransactionTCC", cancelMethod = "cancelTransactionTCC")
+  public boolean buyWithTransactionTCC(long userId, double price) {
+    UserInfo info = userMapper.getUserInfo(userId);
+    if (info == null) {
+      throw new InvocationException(400, "", "user id not valid");
+    }
+    if (info.getTotalBalance() < price) {
+      throw new InvocationException(400, "", "user do not got so mush money");
+    }
+    info.setTotalBalance(info.getTotalBalance() - price);
+    userMapper.updateUserInfo(info);
+    return true;
+  }
+
+  void confirmTransactionTCC(long userId, double price) {
+    UserInfo info = userMapper.getUserInfo(userId);
+    if (info == null) {
+      return;
+    }
+    if (info.isReserved()) {
+      info.setReserved(false);
+      info.setTotalBalance(info.getTotalBalance() - price);
+      userMapper.updateUserInfo(info);
+    }
+  }
+
+  void cancelTransactionTCC(long userId, double price) {
+    UserInfo info = userMapper.getUserInfo(userId);
+    if (info == null) {
+      return;
+    }
+    if (info.isReserved()) {
+      info.setReserved(false);
+      userMapper.updateUserInfo(info);
+    }
   }
 }

@@ -7,6 +7,8 @@ import com.huawei.cse.houseapp.product.api.ProductInfo;
 public interface CustomerEndpoint {
   boolean buyWithTransactionSaga(long userId, long productId, double price);
 
+  boolean buyWithTransactionTCC(long userId, long productId, double price);
+
   boolean buyWithTransaction2PC(long userId, long productId, double price);
 
   boolean buyWithTransaction(long userId, long productId, double price);

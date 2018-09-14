@@ -5,6 +5,8 @@ public interface AccountEndpoint {
 
   boolean payWithTransaction(long userid, double amount);
 
+  boolean payWithTransactionTCC(long userid, double amount);
+
   boolean payWithTransaction2pc(long userid, double amount);
 
   boolean payWithoutTransaction(long userid, double amount);

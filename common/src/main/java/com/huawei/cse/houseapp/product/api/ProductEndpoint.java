@@ -15,6 +15,8 @@ public interface ProductEndpoint {
 
   public boolean buyWithTransactionSaga(long productId, long userId, double price);
 
+  public boolean buyWithTransactionTCC(long productId, long userId, double price);
+  
   public boolean buyWithoutTransaction(long productId, long userId, double price);
 
   long login(String userName, String password);
