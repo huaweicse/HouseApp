@@ -5,8 +5,6 @@ import javax.inject.Inject;
 import org.apache.servicecomb.provider.rest.common.RestSchema;
 import org.apache.servicecomb.serviceregistry.RegistryUtils;
 import org.apache.servicecomb.swagger.invocation.exception.InvocationException;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.huawei.cse.houseapp.user.api.UserEndpoint;
 import com.huawei.cse.houseapp.user.api.UserInfo;
 import com.huawei.cse.houseapp.user.dao.UserMapper;
-import com.huawei.paas.cse.tcc.annotation.TccTransaction;
 import com.netflix.config.DynamicPropertyFactory;
 
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 
 @RestSchema(schemaId = "user")
@@ -110,72 +106,6 @@ public class UserEndpointImpl implements UserEndpoint {
   }
 
   @Override
-  @PostMapping(path = "buy2pc")
-  @ApiResponse(code = 400, response = String.class, message = "")
-  @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-  public boolean buyWithTransaction2pc(@RequestParam(name = "userId") long userId,
-      @RequestParam(name = "price") double price) {
-    UserInfo info = userMapper.getUserInfo(userId);
-    if (info == null) {
-      throw new InvocationException(400, "", "user id not valid");
-    }
-    if (info.getTotalBalance() < price) {
-      throw new InvocationException(400, "", "user do not got so mush money");
-    }
-    info.setTotalBalance(info.getTotalBalance() - price);
-    userMapper.updateUserInfo(info);
-    return true;
-  }
-
-  @Override
-  @TccTransaction(cancelMethod = "cancelBuy", confirmMethod = "confirmBuy")
-  @PostMapping(path = "buy")
-  @ApiResponse(code = 400, response = String.class, message = "")
-  public boolean buyWithTransaction(@RequestParam(name = "userId") long userId,
-      @RequestParam(name = "price") double price) {
-    UserInfo info = userMapper.getUserInfo(userId);
-    if (info == null) {
-      throw new InvocationException(400, "", "user id not valid");
-    }
-    if (info.isReserved()) {
-      throw new InvocationException(400, "", "user have already reserved a house");
-    }
-
-    if (info.getTotalBalance() < price) {
-      return false;
-    } else {
-      info.setReserved(true);
-      userMapper.updateUserInfo(info);
-      return true;
-    }
-  }
-
-  @ApiOperation(hidden = true, value = "")
-  public void cancelBuy(long userId, double price) {
-    UserInfo info = userMapper.getUserInfo(userId);
-    if (info == null) {
-      return;
-    }
-    if (info.isReserved()) {
-      info.setReserved(false);
-      userMapper.updateUserInfo(info);
-    }
-  }
-
-  @ApiOperation(hidden = true, value = "")
-  public void confirmBuy(long userId, double price) {
-    UserInfo info = userMapper.getUserInfo(userId);
-    if (info == null) {
-      return;
-    }
-    if (info.isReserved()) {
-      info.setReserved(false);
-      info.setTotalBalance(info.getTotalBalance() - price);
-      userMapper.updateUserInfo(info);
-    }
-  }
-
-  @Override
   @GetMapping(path = "queryReduced")
   public double queryReduced() {
     boolean isThrow =
@@ -191,7 +121,6 @@ public class UserEndpointImpl implements UserEndpoint {
       try {
         Thread.sleep(sleep);
       } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
     }

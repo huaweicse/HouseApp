@@ -84,7 +84,7 @@ public class LoadTestEndpoint {
                                         price));
                         try {
                             if (transactioType == 2) {
-                                customerService.buyWithTransaction2PC(userId, productId, price);
+                                customerService.buyWithTransactionSaga(userId, productId, price);
                             } else if (transactioType == 1) {
                                 customerService.buyWithTransactionTCC(userId, productId, price);
                             } else {

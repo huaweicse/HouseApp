@@ -9,10 +9,6 @@ public interface UserEndpoint {
 
   boolean buyWithTransactionTCC(long userId, double price);
 
-  boolean buyWithTransaction(long userId, double price);
-
-  boolean buyWithTransaction2pc(long userId, double price);
-
   boolean buyWithoutTransaction(long userId, double price);
 
   double queryReduced();

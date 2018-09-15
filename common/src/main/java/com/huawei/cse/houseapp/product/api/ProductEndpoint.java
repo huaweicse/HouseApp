@@ -9,10 +9,6 @@ public interface ProductEndpoint {
 
   void addProduct(double price);
 
-  public boolean buyWithTransaction2pc(long productId, long userId, double price);
-
-  public boolean buyWithTransaction(long productId, long userId, double price);
-
   public boolean buyWithTransactionSaga(long productId, long userId, double price);
 
   public boolean buyWithTransactionTCC(long productId, long userId, double price);

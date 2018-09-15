@@ -78,11 +78,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.huawei.paas.cse</groupId>
-            <artifactId>cse-handler-2pc</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
@@ -130,7 +125,6 @@
         <module>edge-service</module>
         <module>product-service</module>
         <module>user-service</module>
-        <module>tx-coordinator</module>
         <module>init-db</module>
     </modules>
 

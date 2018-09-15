@@ -4,15 +4,12 @@ import javax.inject.Inject;
 
 import org.apache.servicecomb.provider.pojo.RpcSchema;
 import org.apache.servicecomb.swagger.invocation.exception.InvocationException;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.huawei.cse.houseapp.account.api.AccountEndpoint;
 import com.huawei.cse.houseapp.account.dao.AccountInfo;
 import com.huawei.cse.houseapp.account.dao.AccountMapper;
 import com.huawei.paas.cse.tcc.annotation.TccTransaction;
 
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 
 @RpcSchema(schemaId = "account")
@@ -60,23 +57,6 @@ public class AccountEndpointImpl implements AccountEndpoint {
     return true;
   }
 
-
-  @Override
-  @ApiResponse(code = 400, response = String.class, message = "")
-  @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-  public boolean payWithTransaction2pc(long userId, double amount) {
-    AccountInfo info = accountMapper.getAccountInfo(userId);
-    if (info == null) {
-      throw new InvocationException(400, "", "account id not valid");
-    }
-    if (info.getTotalBalance() < amount) {
-      throw new InvocationException(400, "", "account do not have enouph money");
-    }
-    info.setTotalBalance(info.getTotalBalance() - amount);
-    accountMapper.updateAccountInfo(info);
-    return true;
-  }
-
   @Override
   @TccTransaction(cancelMethod = "cancelPay", confirmMethod = "confirmPay")
   @ApiResponse(code = 400, response = String.class, message = "")
@@ -88,50 +68,6 @@ public class AccountEndpointImpl implements AccountEndpoint {
   @ApiResponse(code = 400, response = String.class, message = "")
   public boolean payWithTransactionTCC(long userid, double amount) {
     return accountService.payWithTransactionTCC(userid, amount);
-  }
-  
-  @Override
-  @TccTransaction(cancelMethod = "cancelPay", confirmMethod = "confirmPay")
-  @ApiResponse(code = 400, response = String.class, message = "")
-  public boolean payWithTransaction(long userId, double amount) {
-    AccountInfo info = accountMapper.getAccountInfo(userId);
-    if (info == null) {
-      throw new InvocationException(400, "", "account id not valid");
-    }
-    if (info.isReserved()) {
-      throw new InvocationException(400, "", "account is already in transaction");
-    }
-    if (info.getTotalBalance() < amount) {
-      throw new InvocationException(400, "", "account do not have enouph money");
-    }
-    info.setReserved(true);
-    accountMapper.updateAccountInfo(info);
-    return true;
-  }
-
-  @ApiOperation(hidden = true, value = "")
-  public void cancelPay(long userId, double amount) {
-    AccountInfo info = accountMapper.getAccountInfo(userId);
-    if (info == null) {
-      return;
-    }
-    if (info.isReserved()) {
-      info.setReserved(false);
-      accountMapper.updateAccountInfo(info);
-    }
-  }
-
-  @ApiOperation(hidden = true, value = "")
-  public void confirmPay(long userId, double amount) {
-    AccountInfo info = accountMapper.getAccountInfo(userId);
-    if (info == null) {
-      return;
-    }
-    if (info.isReserved()) {
-      info.setReserved(false);
-      info.setTotalBalance(info.getTotalBalance() - amount);
-      accountMapper.updateAccountInfo(info);
-    }
   }
 
   @Override

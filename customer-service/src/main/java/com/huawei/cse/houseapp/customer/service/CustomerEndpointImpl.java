@@ -7,8 +7,6 @@ import javax.inject.Inject;
 import org.apache.servicecomb.provider.pojo.RpcReference;
 import org.apache.servicecomb.provider.rest.common.RestSchema;
 import org.apache.servicecomb.swagger.invocation.exception.InvocationException;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -20,7 +18,6 @@ import com.huawei.cse.houseapp.customer.api.CustomerEndpoint;
 import com.huawei.cse.houseapp.product.api.ProductEndpoint;
 import com.huawei.cse.houseapp.product.api.ProductInfo;
 import com.huawei.cse.houseapp.user.api.UserEndpoint;
-import com.huawei.paas.cse.tcc.annotation.TccTransaction;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -54,24 +51,6 @@ public class CustomerEndpointImpl implements CustomerEndpoint {
       @RequestParam(name = "productId") long productId, @RequestParam(name = "price") double price) {
     return customerSerivce.buyWithTransactionTCC(userId, productId, price);
   }
-  
-  @Override
-  @TccTransaction(cancelMethod = "cancelBuy", confirmMethod = "confirmBuy")
-  @PostMapping(path = "buy")
-  @ApiResponse(code = 400, response = String.class, message = "buy failed")
-  public boolean buyWithTransaction(@RequestHeader(name = "userId") long userId,
-      @RequestParam(name = "productId") long productId, @RequestParam(name = "price") double price) {
-    if (!userService.buyWithTransaction(userId, price)) {
-      throw new InvocationException(400, "user do not got so much money", "user do not got so much money");
-    }
-    if (!productService.buyWithTransaction(productId, userId, price)) {
-      throw new InvocationException(400, "product already sold", "product already sold");
-    }
-    if (!accountService.payWithTransaction(userId, price)) {
-      throw new InvocationException(400, "pay failed", "pay failed");
-    }
-    return true;
-  }
 
   @Override
   @PostMapping(path = "buyWithoutTransaction")
@@ -86,25 +65,6 @@ public class CustomerEndpointImpl implements CustomerEndpoint {
       throw new InvocationException(400, "user do not got so much money", "user do not got so much money");
     }
     if (!accountService.payWithoutTransaction(userId, price)) {
-      throw new InvocationException(400, "pay failed", "pay failed");
-    }
-    return true;
-  }
-
-  @Override
-  @PostMapping(path = "buy2pc")
-  @ApiResponse(code = 400, response = String.class, message = "buy failed")
-  @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-  public boolean buyWithTransaction2PC(@RequestHeader(name = "userId") long userId,
-      @RequestParam(name = "productId") long productId, @RequestParam(name = "price") double price) {
-    // product will lock, put it in front
-    if (!productService.buyWithTransaction2pc(productId, userId, price)) {
-      throw new InvocationException(400, "product already sold", "product already sold");
-    }
-    if (!userService.buyWithTransaction2pc(userId, price)) {
-      throw new InvocationException(400, "user do not got so much money", "user do not got so much money");
-    }
-    if (!accountService.payWithTransaction2pc(userId, price)) {
       throw new InvocationException(400, "pay failed", "pay failed");
     }
     return true;
