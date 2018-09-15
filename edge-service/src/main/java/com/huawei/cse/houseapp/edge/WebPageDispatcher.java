@@ -26,7 +26,7 @@ public class WebPageDispatcher extends AbstractEdgeDispatcher {
 
     @Override
     public int getOrder() {
-        return 10001;
+        return 12;
     }
 
     @Override

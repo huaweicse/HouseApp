@@ -1,6 +1,7 @@
 package com.huawei.cse.houseapp.product.service;
 
 import javax.inject.Inject;
+import javax.ws.rs.core.Response.Status;
 
 import org.apache.servicecomb.saga.omega.transaction.annotations.Compensable;
 import org.apache.servicecomb.saga.omega.transaction.annotations.Participate;
@@ -66,11 +67,11 @@ public class ProductService {
       // update，事务会加锁，不会并发。这里使用了spring事务。
       ProductInfo info = productMapper.getProductInfo(productId);
       if (info == null) {
-        throw new InvocationException(400, "", "product id not valid");
+        throw new InvocationException(Status.BAD_REQUEST, "product id not valid");
       }
       if (price != info.getPrice()) {
         txManager.commit(status);
-        throw new InvocationException(400, "", "product price not valid");
+        throw new InvocationException(Status.BAD_REQUEST, "product price not valid");
       }
       if (info.isReserved() || info.isSold()) {
         txManager.commit(status);

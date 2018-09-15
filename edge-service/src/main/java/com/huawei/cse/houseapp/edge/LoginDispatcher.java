@@ -22,7 +22,7 @@ public class LoginDispatcher extends AbstractEdgeDispatcher {
 
   @Override
   public int getOrder() {
-    return 10000;
+    return 10;
   }
 
   @Override
@@ -40,22 +40,15 @@ public class LoginDispatcher extends AbstractEdgeDispatcher {
             Cookie cookie = Cookie.cookie("session-id", String.valueOf((long) response.getResult()));
             cookie.setPath("/");
             cookie.setSecure(false);
-
             context.addCookie(cookie);
-            context.response().setStatusCode(302);
-            context.response().putHeader("Location", "/ui/customer-website/index.html");
-            context.response().putHeader("userId", String.valueOf((long) response.getResult()));
             context.response().end();
             LOGGER.info("user login seccuessfully");
           } else {
             Cookie cookie = Cookie.cookie("session-id", String.valueOf(-1));
             cookie.setPath("/");
             cookie.setSecure(false);
-
             context.addCookie(cookie);
-            context.response().setStatusCode(302);
-            context.response().putHeader("Location", "/ui/customer-website/login.html");
-            context.response().putHeader("userId", String.valueOf(-1));
+            context.response().setStatusCode(403);
             context.response().end();
             LOGGER.info("user login failed");
           }

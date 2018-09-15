@@ -1,6 +1,7 @@
 package com.huawei.cse.houseapp.account.service;
 
 import javax.inject.Inject;
+import javax.ws.rs.core.Response.Status;
 
 import org.apache.servicecomb.saga.omega.transaction.annotations.Compensable;
 import org.apache.servicecomb.saga.omega.transaction.annotations.Participate;
@@ -40,13 +41,13 @@ public class AccountService {
   public boolean payWithTransactionTCC(long userid, double amount) {
     AccountInfo info = accountMapper.getAccountInfo(userid);
     if (info == null) {
-      throw new InvocationException(400, "", "account id not valid");
+      throw new InvocationException(Status.BAD_REQUEST, "account id not valid");
     }
     if (info.isReserved()) {
-      throw new InvocationException(400, "", "account is already in transaction");
+      throw new InvocationException(Status.BAD_REQUEST, "account is already in transaction");
     }
     if (info.getTotalBalance() < amount) {
-      throw new InvocationException(400, "", "account do not have enouph money");
+      throw new InvocationException(Status.BAD_REQUEST, "account do not have enouph money");
     }
     info.setReserved(true);
     accountMapper.updateAccountInfo(info);

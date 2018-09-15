@@ -1,6 +1,7 @@
 package com.huawei.cse.houseapp.user.service;
 
 import javax.inject.Inject;
+import javax.ws.rs.core.Response.Status;
 
 import org.apache.servicecomb.saga.omega.transaction.annotations.Compensable;
 import org.apache.servicecomb.saga.omega.transaction.annotations.Participate;
@@ -46,14 +47,19 @@ public class UserService {
   public boolean buyWithTransactionTCC(long userId, double price) {
     UserInfo info = userMapper.getUserInfo(userId);
     if (info == null) {
-      throw new InvocationException(400, "", "user id not valid");
+      throw new InvocationException(Status.BAD_REQUEST, "user id not valid");
     }
+    if (info.isReserved()) {
+      throw new InvocationException(Status.BAD_REQUEST, "user have already reserved a house");
+    }
+
     if (info.getTotalBalance() < price) {
-      throw new InvocationException(400, "", "user do not got so mush money");
+      return false;
+    } else {
+      info.setReserved(true);
+      userMapper.updateUserInfo(info);
+      return true;
     }
-    info.setTotalBalance(info.getTotalBalance() - price);
-    userMapper.updateUserInfo(info);
-    return true;
   }
 
   void confirmTransactionTCC(long userId, double price) {

@@ -40,8 +40,9 @@ cse:
   http:
     dispatcher:
       edge:
-        default:
+        api:
           enabled: true
+        default:
           prefix: api
           withVersion: false
           prefixSegmentCount: 2

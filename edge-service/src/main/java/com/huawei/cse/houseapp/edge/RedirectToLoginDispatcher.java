@@ -7,10 +7,10 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.CookieHandler;
 
 //优先级最低的转发器，将请求重定向到登录页面。
-public class DefaultDispatcher extends AbstractEdgeDispatcher {
+public class RedirectToLoginDispatcher extends AbstractEdgeDispatcher {
   @Override
   public int getOrder() {
-    return 10001;
+    return 13;
   }
 
   @Override

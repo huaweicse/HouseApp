@@ -1,5 +1,7 @@
 package com.huawei.cse.houseapp.customer.service;
 
+import javax.ws.rs.core.Response.Status;
+
 import org.apache.servicecomb.provider.pojo.RpcReference;
 import org.apache.servicecomb.saga.omega.context.annotations.SagaStart;
 import org.apache.servicecomb.saga.omega.context.annotations.TccStart;
@@ -40,13 +42,13 @@ public class CustomerService {
   public boolean buyWithTransactionTCC(long userId,
       long productId, double price) {
     if (!userService.buyWithTransactionTCC(userId, price)) {
-      throw new InvocationException(400, "user do not got so much money", "user do not got so much money");
+      throw new InvocationException(Status.BAD_REQUEST, "user do not got so much money");
     }
     if (!productService.buyWithTransactionTCC(productId, userId, price)) {
-      throw new InvocationException(400, "product already sold", "product already sold");
+      throw new InvocationException(Status.BAD_REQUEST, "product already sold");
     }
     if (!accountService.payWithTransactionTCC(userId, price)) {
-      throw new InvocationException(400, "pay failed", "pay failed");
+      throw new InvocationException(Status.BAD_REQUEST, "pay failed");
     }
     return true;
   }

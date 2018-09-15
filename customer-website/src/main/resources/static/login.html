@@ -144,19 +144,13 @@ $(document).ready(function(){
 <!-- here stars scrolling icon -->
 	<script type="text/javascript">
 		$(document).ready(function() {
-			/*
-				var defaults = {
-				containerID: 'toTop', // fading element id
-				containerHoverID: 'toTopHover', // fading element hover id
-				scrollSpeed: 1200,
-				easingType: 'linear' 
-				};
-			*/
 			var url = '/api/user-service/login2';
 			$('#submit').click(function () {
-				$.post(url, $('#userMessage').serialize(), function () {
-					window.localStorage.setItem('user', JSON.stringify({userName: $('.userName').val()}));
-					window.location.href = './index.html';
+				$.post(url, $('#userMessage').serialize(), function (data,status,response) {
+				     window.localStorage.setItem('user', JSON.stringify({userName: $('.userName').val()}));
+                     window.location.href = './index.html';
+				}).error(function (data,status,response){
+                     window.location.href = './login.html';
 				});
 				return false;
 			});
