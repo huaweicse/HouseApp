@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.huawei.cse.houseapp.product.api.ProductEndpoint;
 import com.huawei.cse.houseapp.product.api.ProductInfo;
 import com.huawei.cse.houseapp.product.dao.ProductMapper;
-import com.huawei.paas.cse.tcc.annotation.TccTransaction;
 import com.netflix.config.DynamicPropertyFactory;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -189,7 +188,6 @@ public class ProductEndpointImpl implements ProductEndpoint {
   }
 
   @Override
-  @TccTransaction(cancelMethod = "cancelBuy", confirmMethod = "confirmBuy")
   @PostMapping(path = "buyWithTransactionSaga")
   @ApiResponse(code = 400, response = String.class, message = "")
   public boolean buyWithTransactionSaga(@RequestParam(name = "productId") long productId,
