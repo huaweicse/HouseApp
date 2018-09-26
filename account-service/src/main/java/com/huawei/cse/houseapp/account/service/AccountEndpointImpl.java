@@ -8,7 +8,6 @@ import org.apache.servicecomb.swagger.invocation.exception.InvocationException;
 import com.huawei.cse.houseapp.account.api.AccountEndpoint;
 import com.huawei.cse.houseapp.account.dao.AccountInfo;
 import com.huawei.cse.houseapp.account.dao.AccountMapper;
-import com.huawei.paas.cse.tcc.annotation.TccTransaction;
 
 import io.swagger.annotations.ApiResponse;
 
@@ -58,7 +57,6 @@ public class AccountEndpointImpl implements AccountEndpoint {
   }
 
   @Override
-  @TccTransaction(cancelMethod = "cancelPay", confirmMethod = "confirmPay")
   @ApiResponse(code = 400, response = String.class, message = "")
   public boolean payWithTransactionSaga(long userid, double amount) {
     return accountService.payWithTransactionSaga(userid, amount);
