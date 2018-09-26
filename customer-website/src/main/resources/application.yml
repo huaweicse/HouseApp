@@ -3,6 +3,9 @@ cse-config-order: 100
 ## Spring Boot configurations
 server:
   port: 9091
+spring:
+  application:
+    name: customer-website
 
 ## CSE configurations
 cse:
