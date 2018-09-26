@@ -9,6 +9,10 @@ import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoC
 @EnableServiceComb
 public class ProductApplication {
   public static void main(String[] args) throws Exception {
-    SpringApplication.run(ProductApplication.class, args);
+    try {
+      SpringApplication.run(ProductApplication.class, args);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }

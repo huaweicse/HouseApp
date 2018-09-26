@@ -6,44 +6,7 @@ spring:
     name: user-service
 server:
   port: 8092
-# alpha
-alpha:
-  cluster:
-    address: 127.0.0.1:7080
-
 ## CSE configurations
-
-APPLICATION_ID: houseapp
-service_description:
-  name: ${spring.application.name}
-  version: 0.0.1
-  environment: development
 cse:
-  service:
-    registry:
-      address: https://cse.cn-north-1.myhuaweicloud.com
-      instance:
-        watch: false
-  config:
-    client:
-      serverUri: https://cse.cn-north-1.myhuaweicloud.com
-      refreshMode: 1
-      refresh_interval: 5000
-  monitor:
-    client:
-      serverUri: https://cse.cn-north-1.myhuaweicloud.com
-
   rest:
     address: 0.0.0.0:8092
-    server:
-      thread-count: 10
-  credentials:
-    accessKey: BUDCVWSAW04UZVLSZBQR
-    secretKey: BHixEctCJFbTkPUVUUjRDSeVwMAknlAy5oB7idgR
-    akskCustomCipher: default
-  handler:
-    chain:
-      Provider:
-        default: qps-flowcontrol-provider,bizkeeper-provider,saga-provider
-      Consumer:
-        default: qps-flowcontrol-consumer,loadbalance,bizkeeper-consumer,saga-consumer

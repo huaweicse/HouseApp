@@ -67,13 +67,26 @@
     <dependency>
       <groupId>com.huawei.paas.cse</groupId>
       <artifactId>cse-solution-service-engine</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
-
+    <dependency>
+      <groupId>org.apache.servicecomb</groupId>
+      <artifactId>handler-tracing-zipkin</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.apache.servicecomb</groupId>
       <artifactId>spring-boot2-starter-servlet</artifactId>
     </dependency>
-
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>compile</scope>
+    </dependency>
     <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis</artifactId>
