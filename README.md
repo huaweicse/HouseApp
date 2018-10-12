@@ -10,8 +10,9 @@
 
 ## 编译运行Alpha
 1. 下载最新Saga代码
-2. 修改alpha\alpha-server\src\main\resources\application.yaml文件. 
-配置正确的mysql信息:
+2. 修改alpha\alpha-server\src\main\resources\application.yaml文件.   
+配置正确的mysql信息:   
+```
 spring:
   profiles: mysql
   datasource:
@@ -20,7 +21,11 @@ spring:
     url: jdbc:mysql://localhost:3306/saga?useSSL=false
     platform: mysql
     continue-on-error: true
+```
+
 修改服务器监听的端口（可选）
+
+```
 server:
   port: 6090
 
@@ -28,12 +33,20 @@ alpha:
   server:
     host: 0.0.0.0
     port: 7080
+```
+
 3. 编译项目：mvn clean install -Pmysql -DskipTests
 4. 启动Alpha
+
+```
 cd alpha\alpha-server\target\saga
 java -Dspring.profiles.active=mysql -D"spring.datasource.url=jdbc:mysql://localhost:3306/saga?useSSL=false" -Dspring.datasource.username=root -Dspring.datasource.password=root -jar alpha-server-0.3.0-SNAPSHOT-exec.jar
 java -Dspring.profiles.active=mysql -jar alpha-server-0.3.0-SNAPSHOT-exec.jar
+```
+
 5. 检查。服务正常启动后，可以进入数据库saga. 可以看到自动生成了一些表。
+
+```
 mysql> show tables;
 +-----------------------+
 | Tables_in_saga        |
@@ -45,6 +58,7 @@ mysql> show tables;
 | txevent               |
 | txtimeout             |
 +-----------------------+
+```
 
 ## 编译运行HouseAPP
 1. 下载最新代码
