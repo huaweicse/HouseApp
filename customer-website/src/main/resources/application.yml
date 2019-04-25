@@ -1,0 +1,37 @@
+cse-config-order: 100
+
+## Spring Boot configurations
+server:
+  port: 9091
+
+## CSE configurations
+APPLICATION_ID: houseapp
+service_description:
+  name: customer-website
+  version: 0.0.1
+  environment: development
+cse:
+  service:
+    registry:
+      address: https://cse.cn-north-1.myhuaweicloud.com
+      instance:
+        watch: false
+  config:
+    client:
+      serverUri: https://cse.cn-north-1.myhuaweicloud.com
+      refreshMode: 1
+      refresh_interval: 5000
+  monitor:
+    client:
+      serverUri: https://cse.cn-north-1.myhuaweicloud.com
+  credentials:
+    accessKey: your access key
+    secretKey: your secret key
+    akskCustomCipher: default
+  rest:
+    address: 0.0.0.0:9091
+    server:
+      thread-count: 10
+## static web site will token root
+    servlet:
+      urlPattern: /api/*

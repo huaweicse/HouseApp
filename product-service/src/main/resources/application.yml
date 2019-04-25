@@ -1,0 +1,50 @@
+cse-config-order: 100
+
+## Spring Boot configurations
+spring:
+  application:
+    name: product-service
+server:
+  port: 8089
+# alpha
+alpha:
+  cluster:
+    address: 127.0.0.1:7080
+
+## CSE configurations
+
+APPLICATION_ID: houseapp
+service_description:
+  name: ${spring.application.name}
+  version: 0.0.1
+  environment: development
+cse:
+  service:
+    registry:
+      address: https://cse.cn-north-1.myhuaweicloud.com
+      instance:
+        watch: false
+  config:
+    client:
+      serverUri: https://cse.cn-north-1.myhuaweicloud.com
+      refreshMode: 1
+      refresh_interval: 5000
+  monitor:
+    client:
+      serverUri: https://cse.cn-north-1.myhuaweicloud.com
+
+  rest:
+    address: 0.0.0.0:8089
+    server:
+      thread-count: 10
+  credentials:
+    accessKey: your access key
+    secretKey: your secret key
+    akskCustomCipher: default
+
+  handler:
+    chain:
+      Provider:
+        default: qps-flowcontrol-provider,bizkeeper-provider,saga-provider
+      Consumer:
+        default: qps-flowcontrol-consumer,loadbalance,bizkeeper-consumer,saga-consumer
